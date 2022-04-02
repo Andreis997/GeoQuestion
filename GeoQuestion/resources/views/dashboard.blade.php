@@ -2,6 +2,7 @@
 @section('content')
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">GeoQuestions</a>
+        <a class="navbar-brand" href="{{ route('signout') }}">Log Out</a>
     </nav>
     <div id="map" style="height:700px;width:100%;position:fixed !important;bottom:0;"></div>
 @endsection
@@ -14,6 +15,7 @@
             const uluru = { lat: 40.866667, lng: 34.566667 };
             // The map, centered at Uluru
             const map = new google.maps.Map(document.getElementById("map"), {
+                mapId: "6102c8d0d2be64a0",
                 zoom: 2.3,
                 center: uluru,
                 disableDefaultUI: true,
