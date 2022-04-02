@@ -178,7 +178,12 @@
                                 icon: 'success',
                                 title: "Congratulation!",
                                 text: "You rock it!",
+                                confirmButtonText: 'Play again',
                                 showConfirmButton: true,
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
                             });
                         }
                         console.log(request);
