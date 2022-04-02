@@ -1,12 +1,15 @@
 @extends('app')
 @section('content')
-    <nav class="navbar navbar-light bg-light">
+    <!--<nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">GeoQuestions</a>
         <a class="navbar-brand" href="{{ route('signout') }}">
             <img src="img/butonprofil.svg" width="30px" height="30px">
         </a>
     </nav>
-    <div id="map" style="height:700px;width:100%;position:fixed !important;bottom:0;"></div>
+    <div id="map" style="height:500px;width:1000px;position:fixed !important;bottom:0;"></div>-->
+    <div style="background-image: url('img/appback.svg');background-repeat: no-repeat; width: 90%; height: 100%; margin-top: 20px; margin-bottom: 20px; margin-left: 67px;">
+        <div id="map" style="height:428px;width:1000px;position:absolute !important;bottom:0;overflow: hidden;margin-left: 358px;margin-bottom: 200px;display:block;"></div>
+    </div>
 @endsection
 
 @section('specificFooter')
