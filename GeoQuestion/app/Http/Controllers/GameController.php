@@ -46,7 +46,7 @@ class GameController extends Controller
 
         $lon1 = $data['longitude'];
         $lat1 = $data['latitude'];
-        $distance = abs($this->distance((float)$lat1, (float)$lon1, (float)$question->latitude, (float)$question->longitude, "K"));
+        $distance = abs($this->distance((float)$lat1, (float)$lon1, (float)$question->latitude_answer, (float)$question->longitude_answer, "K"));
 
         $score = $this->getScore($distance);
         DB::beginTransaction();
