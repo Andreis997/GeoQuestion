@@ -19,7 +19,7 @@
     <script>
         var latitudeAns = "";
         var longitudeAns = "";
-
+        var score = 0;
         // Initialize and add the map
         function initMap() {
             // The location of Uluru
@@ -130,6 +130,10 @@
             });
         }
 
+        function updateScore(score) {
+            $('#score').html(score);
+        }
+
         $(document).ready(function () {
             initQuestions();
             $('#sendAnswer').on('click', function () {
@@ -156,6 +160,8 @@
                     processData: false,
                     success: function (request, e, p) {
                         console.log(request.score);
+                        score += request.score;
+                        updateScore(score);
                         if (request.isEndGame === false) {
                             nextQuestion();
                         } else {
