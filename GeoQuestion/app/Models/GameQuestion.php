@@ -6,12 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class GameQuestion extends Model
 {
+    protected $fillable = [
+        'score',
+        'longitude_answer',
+        'latitude_answer'
+    ];
 
-    public function game() {
+    public function game()
+    {
         return $this->belongsTo(Game::class);
     }
 
-    public function question() {
+    public function question()
+    {
         return $this->belongsTo(Question::class);
     }
 }
