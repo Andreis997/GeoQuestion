@@ -15,6 +15,10 @@
         function initMap() {
             // The location of Uluru
             const uluru = { lat: 40.866667, lng: 34.566667 };
+            const markerImage = {
+                url: "img/checkpoint.svg",
+                scaledSize: new google.maps.Size(50, 50)
+            }
             // The map, centered at Uluru
             const map = new google.maps.Map(document.getElementById("map"), {
                 mapId: "6102c8d0d2be64a0",
@@ -25,7 +29,7 @@
             });
             // The marker, positioned at Uluru
             var marker = new google.maps.Marker({
-
+                icon: markerImage,
                 map: map,
             });
             google.maps.event.addListener(map, 'click', function (event) {
@@ -37,6 +41,7 @@
                     //Create the marker.
                     marker = new google.maps.Marker({
                         position: clickedLocation,
+                        icon: markerImage,
                         map: map,
                         draggable: true //make it draggable
                     });
