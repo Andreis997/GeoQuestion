@@ -29,8 +29,11 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="d-grid mx-auto">
-                                    <button type="submit" class="btn btn-dark btn-block">Signin</button>
+                                <div class="d-grid" style="margin-bottom: 3px">
+                                    <a class="btn btn-dark btn-block" href="{{ route('register-user') }}">Register</a>
+                                </div>
+                                <div class="d-grid ">
+                                    <button type="submit" class="btn btn-dark btn-block">Login</button>
                                 </div>
                             </form>
                         </div>
