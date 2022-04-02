@@ -37,7 +37,7 @@ class GameController extends Controller
 
         $lon1 = $data['longitude'];
         $lat1 = $data['latitude'];
-        $distance = abs($this->distance($lat1, $lon1, $question->latitude, $question->longitude, "K"));
+        $distance = abs($this->distance((float)$lat1, (float)$lon1, (float)$question->latitude, (float)$question->longitude, "K"));
 
         $score = $this->getScore($distance);
 
@@ -60,13 +60,13 @@ class GameController extends Controller
     {
         $elements = [];
         $lastQuestionId = (Question::orderBy('id', 'desc')->first())->id;
+        $numOfQuestionRequested = $lastQuestionId > $this->numOfQuestions ? $this->numOfQuestions : $lastQuestionId;
         do {
-
             $value = rand(1, $lastQuestionId);
             if (!in_array($value, $elements)) {
                 $elements[] = $value;
             }
-        } while (count($elements) < $this->numOfQuestions);
+        } while (count($elements) < $numOfQuestionRequested);
 
         return $elements;
     }
