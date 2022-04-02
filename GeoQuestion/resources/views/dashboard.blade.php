@@ -2,7 +2,9 @@
 @section('content')
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">GeoQuestions</a>
-        <a class="navbar-brand" href="{{ route('signout') }}">Log Out</a>
+        <a class="navbar-brand" href="{{ route('signout') }}">
+            <img src="icons/cactus-furniture-nature-16-svgrepo-com.svg">
+        </a>
     </nav>
     <div id="map" style="height:700px;width:100%;position:fixed !important;bottom:0;"></div>
 @endsection
