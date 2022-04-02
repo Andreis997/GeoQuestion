@@ -1,13 +1,5 @@
 @extends('app')
 @section('content')
-    <!--<nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#">GeoQuestions</a>
-        <a class="navbar-brand" href="{{ route('signout') }}">
-            <img src="img/butonprofil.svg" width="30px" height="30px">
-        </a>
-        <btn class="btn btn-success" id="sendAnswer">Trimite solutie</btn>
-    </nav>
-    <div id="map" style="height:500px;width:1000px;position:fixed !important;bottom:0;"></div>-->
     <div style="background-image: url('img/back.svg');background-repeat: no-repeat; width: 90%; height: 100%; margin-top: 20px; margin-bottom: 20px; margin-left: 67px;">
         <div style="position:absolute !important; color: white;margin-top: 3px;font-size:270%;margin-left:4px;">Geo</div>
         <div style="position:absolute !important; color: white;margin-top: 3px;font-size:270%;margin-left:124px;">uizzes</div>
@@ -131,6 +123,12 @@
                 processData: false,
                 success: function (request, e, p) {
                     console.log(request);
+                    var leaderBoard = "";
+                    var data = request.data;
+                    for(var i = 0; i < data.length; ++i) {
+                        leaderBoard += "<div><span>" + data[i].email + " - " + data[i].score + "</span></div><br>"
+                    }
+                    $("#leaderboard").html(leaderBoard);
                 },
                 error: function (request) {
                     console.log(request);
