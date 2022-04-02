@@ -8,8 +8,10 @@
         <btn class="btn btn-success" id="sendAnswer">Trimite solutie</btn>
     </nav>
     <div id="map" style="height:500px;width:1000px;position:fixed !important;bottom:0;"></div>-->
-    <div style="background-image: url('img/appback.svg');background-repeat: no-repeat; width: 90%; height: 100%; margin-top: 20px; margin-bottom: 20px; margin-left: 67px;">
+    <div style="background-image: url('img/back.svg');background-repeat: no-repeat; width: 90%; height: 100%; margin-top: 20px; margin-bottom: 20px; margin-left: 67px;">
+        <a style="width: 77px;height: 77px;display:block;float:right" href="{{ route('signout') }}"></a>
         <div id="map" style="height:428px;width:1000px;position:absolute !important;bottom:0;overflow: hidden;margin-left: 358px;margin-bottom: 200px;display:block;"></div>
+        <btn id="sendAnswer" style="position:absolute !important; margin-top:617px; margin-left:1264px; color: white; font-size:160%;">Trimite<br>solutie</btn>
     </div>
 @endsection
 
