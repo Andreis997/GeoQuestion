@@ -9,9 +9,10 @@
         <div style="position:absolute !important; color: white; font-size:280%; margin-top:516px; margin-left:90px;">Scor:</div>
 
         <div id="leaderboard" style="position: absolute; !important; height: 369px; width: 298px;margin-top: 97px"></div>
-        <div id="quiz" style="position:absolute !important; color: white; font-size: 200%; padding-top:632px; padding-left: 425px;"></div>
+
         <div id="scor" style="position:absolute !important; color: white; font-size:280%; margin-top:589px; margin-left:90px;"></div>
     </div>
+    <div id="quiz" style="position:absolute !important; color: white; font-size: 200%; margin-top:-156px; margin-left: 445px;"></div>
 @endsection
 
 @section('specificFooter')
