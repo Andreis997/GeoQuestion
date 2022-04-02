@@ -17,8 +17,8 @@
         <div style="position:absolute !important; color: white; font-size:280%; margin-top:516px; margin-left:90px;">Scor:</div>
 
 
-        <div id="quiz" style="position:absolute !important; color: white; font-size:150%;">Random fucking question? yes yes yes yes yes</div>
-        <div id="scor" style="position:absolute !important; color: white; font-size:280%; margin-top:589px; margin-left:90px;">0000</div>
+        <div id="quiz" style="position:absolute !important; color: white; font-size:150%;"></div>
+        <div id="scor" style="position:absolute !important; color: white; font-size:280%; margin-top:589px; margin-left:90px;"></div>
     </div>
 @endsection
 
@@ -99,6 +99,7 @@
                 processData: false,
                 success: function (request, e, p) {
                     console.log(request);
+                    $("#quiz").html(request.data.question)
                 },
                 error: function (request) {
                     console.log(request);
@@ -138,11 +139,13 @@
         }
 
         function updateScore(score) {
-            $('#score').html(score);
+            $('#scor').html(score);
         }
 
         $(document).ready(function () {
             initQuestions();
+            updateScore(score);
+            loadLeaderBoard();
             $('#sendAnswer').on('click', function () {
                 if (latitudeAns === "" || longitudeAns === "") {
                     Swal.fire({
@@ -187,7 +190,6 @@
                     }
                 });
                 loadLeaderBoard();
-                //setInterval(loadLeaderBoard, 10000);
             });
         });
     </script>
