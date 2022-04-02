@@ -1,18 +1,18 @@
 <?php
 
-namespace Database\Seeders;
-
 use App\Models\Question;
-use Illuminate\Database\Seeder;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class QuestionsTableSeeder extends Seeder
+class SeedQuestionsTables extends Migration
 {
     /**
-     * Run the database seeds.
+     * Run the migrations.
      *
      * @return void
      */
-    public function run()
+    public function up()
     {
         $this->createQuestion("44.931568163921945", "26.024826548735035", "Unde s-a nascut Tudor?");
         $this->createQuestion("45.410855956775656", "25.534211269217028", "Unde s-a nascut Ana?");
@@ -31,5 +31,15 @@ class QuestionsTableSeeder extends Seeder
             'latitude_answer' => $latitudeAnswer,
             'text' => $question,
         ]);
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        //
     }
 }
