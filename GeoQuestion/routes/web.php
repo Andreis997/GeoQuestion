@@ -18,6 +18,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('', [CustomAuthController::class, 'dashboard']);
     Route::get('nextQuestion', [\App\Http\Controllers\GameController::class, 'getNextQuestion'])->name('nextQuestion');
     Route::post('sendAnswer', [\App\Http\Controllers\GameController::class, 'postSendAnswer'])->name('postSendAnswer');
+    Route::get('getLeaderBoard', [\App\Http\Controllers\LeaderboardController::class, 'getLeaderBoard'])->name('getLeaderBoard');
 });
 Route::group(['middleware' => 'guest'], function () {
     Route::get('login', [CustomAuthController::class, 'index'])->name('login');
