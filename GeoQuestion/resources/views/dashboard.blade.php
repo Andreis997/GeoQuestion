@@ -111,6 +111,21 @@
             nextQuestion();
         }
 
+        function loadLeaderBoard() {
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                type: 'GET',
+                url: "{{ route('getLeaderBoard') }}",
+                processData: false,
+                success: function (request, e, p) {
+                    console.log(request);
+                },
+                error: function (request) {
+                    console.log(request);
+                }
+            });
+        }
+
         $(document).ready(function () {
             initQuestions();
             $('#sendAnswer').on('click', function () {
@@ -151,6 +166,8 @@
                         console.log(request);
                     }
                 });
+                loadLeaderBoard();
+                //setInterval(loadLeaderBoard, 10000);
             });
         });
     </script>
