@@ -6,8 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
+    protected $table = "questions";
 
-    public function gamesQuestion() {
+    protected $fillable = [
+        'longitude_answer',
+        'latitude_answer',
+        'text',
+    ];
+
+    public function gamesQuestion()
+    {
         return $this->belongsTo(GameQuestion::class);
     }
 }

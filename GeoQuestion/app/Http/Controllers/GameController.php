@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Models\GameQuestion;
 use App\Models\Question;
+use App\Resources\QuestionResource;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class GameController extends Controller
 {
@@ -15,20 +17,27 @@ class GameController extends Controller
     private int $numOfQuestions = 10;
 
     public function getNextQuestion(Request $request) {
-        if(!$request->session()->has(self::GAME_COLLECTION_KEY)) {
-            $this->initiateGame($request);
-        }
-        $questionCollection = $request->session()->get(self::GAME_COLLECTION_KEY);
-        $questions = $questionCollection["questions"];
-        $question = $questions[$questionCollection["currentIndex"]];
-        return new \QuestionResource($question);
+            if(!$request->session()->has(self::GAME_COLLECTION_KEY)) {
+                DB::beginTransaction();
+                try {
+                    $this->initiateGame($request);
+                    DB::commit();
+                } catch (\Exception $e) {
+                    DB::rollback();
+                    return new Response([], 500);
+                }
+            }
+            $questionCollection = $request->session()->get(self::GAME_COLLECTION_KEY);
+            $questions = $questionCollection["questions"];
+            $question = $questions[$questionCollection["currentIndex"]];
+            return new QuestionResource($question);
     }
 
     public function postSendAnswer(Request $request) {
 
         $data = $request->validate([
-            "longitude" => 'required|int',
-            "latitude" => 'required|int',
+            "longitude" => 'required|numeric',
+            "latitude" => 'required|numeric',
         ]);
 
         $questionCollection = $request->session()->get(self::GAME_COLLECTION_KEY);
@@ -37,17 +46,23 @@ class GameController extends Controller
 
         $lon1 = $data['longitude'];
         $lat1 = $data['latitude'];
-        $distance = abs($this->distance((float)$lat1, (float)$lon1, (float)$question->latitude, (float)$question->longitude, "K"));
+        $distance = abs($this->distance((float)$lat1, (float)$lon1, (float)$question->latitude_answer, (float)$question->longitude_answer, "K"));
 
         $score = $this->getScore($distance);
-
-        $this->createGameQuestion($score, $lon1, $lat1, $questionCollection['game'], $question);
+        DB::beginTransaction();
+        try {
+            $this->createGameQuestion($score, $lon1, $lat1, $questionCollection['game'], $question);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([], 500);
+        }
 
         $questionCollection['currentIndex'] = $questionCollection['currentIndex'] + 1;
 
         $isEndGame = $this->decideEndGameAndDoAction($questionCollection, $questions, $request);
 
-        return Response::json([
+        return response()->json([
             'score' => $score,
             'isEndGame' => $isEndGame,
         ]);
@@ -130,7 +145,7 @@ class GameController extends Controller
      */
     private function createGameQuestion(int $score, $lon1, $lat1, $game, $question): void
     {
-        $gameQuestion = GameQuestion::create([
+        $gameQuestion = new GameQuestion([
             'score' => $score,
             'longitude_answer' => $lon1,
             'latitude_answer' => $lat1
