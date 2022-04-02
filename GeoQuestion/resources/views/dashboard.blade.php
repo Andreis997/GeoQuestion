@@ -3,7 +3,7 @@
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">GeoQuestions</a>
         <a class="navbar-brand" href="{{ route('signout') }}">
-            <img src="icons/cactus-furniture-nature-16-svgrepo-com.svg">
+            <img src="img/cactus-furniture-nature-16-svgrepo-com.svg">
         </a>
     </nav>
     <div id="map" style="height:700px;width:100%;position:fixed !important;bottom:0;"></div>
