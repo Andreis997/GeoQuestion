@@ -16,8 +16,8 @@
         <btn id="sendAnswer" style="position:absolute !important; margin-top:617px; margin-left:1264px; color: white; font-size:160%;">Trimite<br>solutie</btn>
         <div style="position:absolute !important; color: white; font-size:280%; margin-top:516px; margin-left:90px;">Scor:</div>
 
-
-        <div id="quiz" style="position:absolute !important; color: white; font-size:150%;"></div>
+        <div id="leaderboard" style="position: absolute; !important; height: 369px; width: 298px;margin-top: 97px"></div>
+        <div id="quiz" style="position:absolute !important; color: white; font-size: 200%; padding-top:632px; padding-left: 425px;"></div>
         <div id="scor" style="position:absolute !important; color: white; font-size:280%; margin-top:589px; margin-left:90px;"></div>
     </div>
 @endsection
