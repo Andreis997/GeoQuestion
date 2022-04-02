@@ -1,35 +1,64 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Custom Auth in Laravel</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-<nav class="navbar navbar-light navbar-expand-lg mb-5" style="background-color: #e3f2fd;">
-    <div class="container">
-        <a class="navbar-brand mr-auto" href="#">PositronX</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                @guest
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register-user') }}">Register</a>
-                    </li>
-                @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('signout') }}">Logout</a>
-                    </li>
-                @endguest
-            </ul>
-        </div>
-    </div>
-</nav>
-@yield('content')
-</body>
-</html>
+@extends('app')
+@section('content')
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">GeoQuestions</a>
+    </nav>
+    <div id="map" style="height:700px;width:100%;position:fixed !important;bottom:0;"></div>
+@endsection
+
+@section('specificFooter')
+    <script>
+        // Initialize and add the map
+        function initMap() {
+            // The location of Uluru
+            const uluru = { lat: 40.866667, lng: 34.566667 };
+            // The map, centered at Uluru
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 2.3,
+                center: uluru,
+                disableDefaultUI: true,
+                zoomControl: true,
+            });
+            // The marker, positioned at Uluru
+            var marker = new google.maps.Marker({
+
+                map: map,
+            });
+            google.maps.event.addListener(map, 'click', function (event) {
+                //Get the location that the user clicked.
+                var clickedLocation = event.latLng;
+                console.log(clickedLocation)
+                //If the marker hasn't been added.
+                if (marker === false) {
+                    //Create the marker.
+                    marker = new google.maps.Marker({
+                        position: clickedLocation,
+                        map: map,
+                        draggable: true //make it draggable
+                    });
+                    //Listen for drag events!
+                    google.maps.event.addListener(marker, 'dragend', function (event) {
+                        markerLocation();
+                    });
+                } else {
+                    //Marker has already been added, so just change its location.
+                    marker.setPosition(clickedLocation);
+                }
+                //Get the marker's location.
+                markerLocation();
+            });
+
+            //This function will get the marker's current location and then add the lat/long
+            //values to our textfields so that we can save the location.
+            function markerLocation() {
+                //Get location.
+                var currentLocation = marker.getPosition();
+                //Add lat and lng values to a field that we can save.
+                console.log("lat:" + currentLocation.lat() + " lng:" + currentLocation.lng());
+
+            }
+        }
+    </script>
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRr85trF2DPDrSjrbbNYF5oOCrGpf8SA0&callback=initMap&v=weekly" async></script>
+@endsection
