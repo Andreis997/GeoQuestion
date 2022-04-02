@@ -79,13 +79,7 @@
         }
 
         function nextQuestion() {
-            Swal.fire({
-                title: "Incarcam intrebarea",
-                text: "Te rugam sa astepti!",
-                imageUrl: "/img/loading.svg",
-                showConfirmButton: false,
-                allowOutsideClick: false
-            });
+            loader("We are looking for new challenges!");
             $.ajax({
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 type: 'GET',
@@ -111,6 +105,16 @@
             nextQuestion();
         }
 
+        function loader(text) {
+            Swal.fire({
+                title: "Processing",
+                text: text,
+                imageUrl: "/img/loading.svg",
+                showConfirmButton: false,
+                allowOutsideClick: false
+            });
+        }
+
         function loadLeaderBoard() {
             $.ajax({
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -129,13 +133,16 @@
         $(document).ready(function () {
             initQuestions();
             $('#sendAnswer').on('click', function () {
-                Swal.fire({
-                    title: "Incarcam solutia",
-                    text: "Te rugam sa astepti!",
-                    imageUrl: "/img/loading.svg",
-                    showConfirmButton: false,
-                    allowOutsideClick: false
-                });
+                if (latitudeAns === "" || longitudeAns === "") {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: "Warning",
+                        text: "You have to point on map first!",
+                        showConfirmButton: true,
+                    });
+                    return;
+                }
+                loader("Your answer is processing!");
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     type: 'POST',
@@ -154,8 +161,8 @@
                         } else {
                             Swal.fire({
                                 icon: 'success',
-                                title: "Felictari",
-                                text: "Ai terminat intrebarile",
+                                title: "Congratulation!",
+                                text: "You rock it!",
                                 showConfirmButton: true,
                             });
                         }
