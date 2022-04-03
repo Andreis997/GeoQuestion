@@ -68,6 +68,8 @@ class GameController extends Controller
         return response()->json([
             'score' => $score,
             'isEndGame' => $isEndGame,
+            'correct_latitude' => (float)$question->latitude_answer,
+            'correct_longitude' => (float)$question->longitude_answer,
         ]);
     }
 

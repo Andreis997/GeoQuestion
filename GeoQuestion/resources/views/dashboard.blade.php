@@ -1,18 +1,33 @@
 @extends('app')
 @section('content')
-    <div style="background-image: url('img/back.svg');background-repeat: no-repeat; width: 90%; height: 100%; margin-top: 20px; margin-bottom: 20px; margin-left: 67px;">
+    <div
+        style="background-image: url('img/back.svg');background-repeat: no-repeat; width: 90%; height: 100%; margin-top: 20px; margin-bottom: 20px; margin-left: 67px;">
         <a style="width: 77px;height: 77px;display:block;float:right" href="{{ route('signout') }}"></a>
-        <div id="map" style="height:428px;width:1000px;position:absolute !important;bottom:0;overflow: hidden;margin-left: 358px;margin-bottom: 200px;display:block;"></div>
-        <btn id="sendAnswer" style="position:absolute !important; margin-top:636px; margin-left:1264px; color: white; font-size:160%;">Submit</btn>
-        <div style="position:absolute !important; color: white; font-size:280%; margin-top:516px; margin-left:78px;">Score:</div>
+        <div id="map"
+             style="height:428px;width:1000px;position:absolute !important;bottom:0;overflow: hidden;margin-left: 358px;margin-bottom: 200px;display:block;"></div>
+        <btn id="sendAnswer"
+             style="position:absolute !important; margin-top:636px; margin-left:1264px; color: white; font-size:160%;">
+            Submit
+        </btn>
+        <div style="position:absolute !important; color: white; font-size:280%; margin-top:516px; margin-left:78px;">
+            Score:
+        </div>
 
-        <div id="leaderboardtext" style="color:white; position:absolute !important; font-size:200%; margin-top:0px;margin-left:0px; z-index: 1;margin-top:117px; margin-left:47px">Leaderboard</div>
-        <div id="leaderback" style="background-image: url('img/leaderback.svg'); background-repeat: no-repeat; position:absolute; !important; margin-left:11px; margin-top:110px; width: 18%; height: 100%"></div>
-        <div id="leaderboard" style="position: absolute; !important; color:white; font-size:90%; height: 335px; width: 281px;margin-top: 187px; margin-left:12px;"></div>
-        <div id="logo" style="background-image: url('img/logo.svg');background-repeat: no-repeat; height: 79px; position: absolute; width: 304px;"></div>
-        <div id="scor" style="position:absolute !important; color: white; font-size:280%; margin-top:589px; margin-left:90px;"></div>
+        <div id="leaderboardtext"
+             style="color:white; position:absolute !important; font-size:200%; margin-top:0px;margin-left:0px; z-index: 1;margin-top:117px; margin-left:47px">
+            Leaderboard
+        </div>
+        <div id="leaderback"
+             style="background-image: url('img/leaderback.svg'); background-repeat: no-repeat; position:absolute; !important; margin-left:11px; margin-top:110px; width: 18%; height: 100%"></div>
+        <div id="leaderboard"
+             style="position: absolute; !important; color:white; font-size:90%; height: 335px; width: 281px;margin-top: 187px; margin-left:12px;"></div>
+        <div id="logo"
+             style="background-image: url('img/logo.svg');background-repeat: no-repeat; height: 79px; position: absolute; width: 304px;"></div>
+        <div id="scor"
+             style="position:absolute !important; color: white; font-size:280%; margin-top:589px; margin-left:90px;"></div>
     </div>
-    <div id="quiz" style="position:absolute !important; color: white; font-size: 170%; margin-top:-156px; margin-left: 445px;"></div>
+    <div id="quiz"
+         style="position:absolute !important; color: white; font-size: 170%; margin-top:-156px; margin-left: 445px;"></div>
 @endsection
 
 @section('specificFooter')
@@ -25,8 +40,11 @@
         var longitudeAns = "";
         var score = 0;
         var isFirstQuestionInit = false;
+        var markerImageGood;
         // Initialize and add the map
         var marker = false;
+        var map;
+
         function initMap() {
             // The location of Uluru
             const uluru = {lat: 40.866667, lng: 34.566667};
@@ -34,8 +52,12 @@
                 url: "img/checkpoint.svg",
                 scaledSize: new google.maps.Size(50, 50)
             }
+            markerImageGood = {
+                url: "img/checkpointGood.svg",
+                scaledSize: new google.maps.Size(50, 50)
+            }
             // The map, centered at Uluru
-            const map = new google.maps.Map(document.getElementById("map"), {
+            map = new google.maps.Map(document.getElementById("map"), {
                 mapId: "6102c8d0d2be64a0",
                 zoom: 2.3,
                 center: uluru,
@@ -134,7 +156,7 @@
                     console.log(request);
                     var leaderBoard = "";
                     var data = request.data;
-                    for(var i = 0; i < data.length; ++i) {
+                    for (var i = 0; i < data.length; ++i) {
                         leaderBoard += "<div><span>" + data[i].email + " - " + data[i].score + "</span></div><br>"
                     }
                     $("#leaderboard").html(leaderBoard);
@@ -149,8 +171,16 @@
             $('#scor').html(score);
         }
 
+        function newGoodMarker(request) {
+            new google.maps.Marker({
+                position: new google.maps.LatLng(request.correct_longitude, request.correct_latitude),
+                icon: markerImageGood,
+                map: map,
+                draggable: false //make it draggable
+            });
+        }
+
         $(document).ready(function () {
-            //initMap();
             initQuestions();
             updateScore(score);
             loadLeaderBoard();
@@ -183,6 +213,7 @@
                         console.log(request.score);
                         score += request.score;
                         updateScore(score);
+                        newGoodMarker(request);
                         if (request.isEndGame === false) {
                             nextQuestion();
                         } else {
