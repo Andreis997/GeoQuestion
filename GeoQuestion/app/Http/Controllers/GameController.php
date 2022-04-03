@@ -14,7 +14,7 @@ class GameController extends Controller
 {
 
     const GAME_COLLECTION_KEY = "gameCollection";
-    private int $numOfQuestions = 10;
+    private int $numOfQuestions = 5;
 
     public function getNextQuestion(Request $request) {
             if(!$request->session()->has(self::GAME_COLLECTION_KEY)) {
@@ -99,7 +99,7 @@ class GameController extends Controller
         $elements = $this->getQuestionsIds();
         $request->session()->put(self::GAME_COLLECTION_KEY, [
             'game' => $game,
-            'questions' => Question::find($elements),
+            'questions' => Question::find($elements)->shuffle(),
             'currentIndex' => 0
         ]);
     }

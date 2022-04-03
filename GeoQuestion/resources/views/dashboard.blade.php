@@ -20,6 +20,7 @@
         var latitudeAns = "";
         var longitudeAns = "";
         var score = 0;
+        var isFirstQuestionInit = false;
         // Initialize and add the map
         function initMap() {
             // The location of Uluru
@@ -91,6 +92,7 @@
                 contentType: false,
                 processData: false,
                 success: function (request, e, p) {
+                    isFirstQuestionInit = true;
                     console.log(request);
                     $("#quiz").html(request.data.question)
                 },
@@ -146,6 +148,9 @@
             updateScore(score);
             loadLeaderBoard();
             $('#sendAnswer').on('click', function () {
+                if (!isFirstQuestionInit) {
+                    return;
+                }
                 if (latitudeAns === "" || longitudeAns === "") {
                     Swal.fire({
                         icon: 'warning',
@@ -182,7 +187,7 @@
                                 showConfirmButton: true,
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    location.reload();
+                                    window.location.reload();
                                 }
                             });
                         }
