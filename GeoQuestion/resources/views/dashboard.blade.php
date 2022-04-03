@@ -12,16 +12,24 @@
         <div id="logo" style="background-image: url('img/logo.svg');background-repeat: no-repeat; height: 79px; position: absolute; width: 304px;"></div>
         <div id="scor" style="position:absolute !important; color: white; font-size:280%; margin-top:589px; margin-left:90px;"></div>
     </div>
-    <div id="quiz" style="position:absolute !important; color: white; font-size: 200%; margin-top:-156px; margin-left: 445px;"></div>
+    <div id="quiz" style="position:absolute !important; color: white; font-size: 170%; margin-top:-156px; margin-left: 445px;"></div>
 @endsection
 
 @section('specificFooter')
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRr85trF2DPDrSjrbbNYF5oOCrGpf8SA0&callback=initMap&v=weekly"
+        async></script>
     <script>
         var latitudeAns = "";
         var longitudeAns = "";
         var score = 0;
         var isFirstQuestionInit = false;
         // Initialize and add the map
+        var marker = new google.maps.Marker({
+            icon: markerImage,
+            map: map,
+        });
         function initMap() {
             // The location of Uluru
             const uluru = {lat: 40.866667, lng: 34.566667};
@@ -38,10 +46,7 @@
                 zoomControl: true,
             });
             // The marker, positioned at Uluru
-            var marker = new google.maps.Marker({
-                icon: markerImage,
-                map: map,
-            });
+
             google.maps.event.addListener(map, 'click', function (event) {
                 //Get the location that the user clicked.
                 var clickedLocation = event.latLng;
@@ -80,6 +85,7 @@
         }
 
         function nextQuestion() {
+            marker = new google.maps.Marker();
             loader("We are looking for new challenges!");
             $.ajax({
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -202,8 +208,4 @@
             });
         });
     </script>
-    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRr85trF2DPDrSjrbbNYF5oOCrGpf8SA0&callback=initMap&v=weekly"
-        async></script>
 @endsection
