@@ -47,7 +47,7 @@ class CustomAuthController extends Controller
         $data = $request->all();
         $check = $this->create($data);
 
-        if (Auth::attempt($data)) {
+        if (Auth::attempt($request->only('email', 'password'))) {
             return redirect()->intended('')
                 ->withSuccess('Signed in');
         }
