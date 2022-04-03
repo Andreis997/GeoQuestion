@@ -102,6 +102,7 @@ class GameController extends Controller
             'questions' => Question::find($elements)->shuffle(),
             'currentIndex' => 0
         ]);
+        $request->session()->save();
     }
 
     private  function distance($lat1, $lon1, $lat2, $lon2, $unit) {
@@ -175,6 +176,7 @@ class GameController extends Controller
         } else {
             $request->session()->put(self::GAME_COLLECTION_KEY, $questionCollection);
         }
+        $request->session()->save();
         return $isEndGame;
     }
 
