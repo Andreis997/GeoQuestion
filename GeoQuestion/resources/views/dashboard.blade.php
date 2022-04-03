@@ -3,8 +3,8 @@
     <div style="background-image: url('img/back.svg');background-repeat: no-repeat; width: 90%; height: 100%; margin-top: 20px; margin-bottom: 20px; margin-left: 67px;">
         <a style="width: 77px;height: 77px;display:block;float:right" href="{{ route('signout') }}"></a>
         <div id="map" style="height:428px;width:1000px;position:absolute !important;bottom:0;overflow: hidden;margin-left: 358px;margin-bottom: 200px;display:block;"></div>
-        <btn id="sendAnswer" style="position:absolute !important; margin-top:617px; margin-left:1264px; color: white; font-size:160%;">Trimite<br>solutie</btn>
-        <div style="position:absolute !important; color: white; font-size:280%; margin-top:516px; margin-left:90px;">Scor:</div>
+        <btn id="sendAnswer" style="position:absolute !important; margin-top:636px; margin-left:1264px; color: white; font-size:160%;">Submit</btn>
+        <div style="position:absolute !important; color: white; font-size:280%; margin-top:516px; margin-left:78px;">Score:</div>
 
         <div id="leaderboardtext" style="color:white; position:absolute !important; font-size:200%; margin-top:0px;margin-left:0px; z-index: 1;margin-top:117px; margin-left:47px">Leaderboard</div>
         <div id="leaderback" style="background-image: url('img/leaderback.svg'); background-repeat: no-repeat; position:absolute; !important; margin-left:11px; margin-top:110px; width: 18%; height: 100%"></div>
