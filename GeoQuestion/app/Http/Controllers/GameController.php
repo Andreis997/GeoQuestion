@@ -6,6 +6,7 @@ use App\Models\Game;
 use App\Models\GameQuestion;
 use App\Models\Question;
 use App\Resources\QuestionResource;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -16,31 +17,33 @@ class GameController extends Controller
     const GAME_COLLECTION_KEY = "gameCollection";
     private int $numOfQuestions = 5;
 
-    public function getNextQuestion(Request $request) {
-            if(!$request->session()->has(self::GAME_COLLECTION_KEY)) {
-                DB::beginTransaction();
-                try {
-                    $this->initiateGame($request);
-                    DB::commit();
-                } catch (\Exception $e) {
-                    DB::rollback();
-                    return new Response([], 500);
-                }
+    public function getNextQuestion(Request $request)
+    {
+        if (!Cache::has(self::GAME_COLLECTION_KEY . "@" . $request->user()->id)) {
+            DB::beginTransaction();
+            try {
+                $this->initiateGame($request);
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
+                return new Response([], 500);
             }
-            $questionCollection = $request->session()->get(self::GAME_COLLECTION_KEY);
-            $questions = $questionCollection["questions"];
-            $question = $questions[$questionCollection["currentIndex"]];
-            return new QuestionResource($question);
+        }
+        $questionCollection = Cache::get(self::GAME_COLLECTION_KEY . "@" . $request->user()->id);
+        $questions = $questionCollection["questions"];
+        $question = $questions[$questionCollection["currentIndex"]];
+        return new QuestionResource($question);
     }
 
-    public function postSendAnswer(Request $request) {
+    public function postSendAnswer(Request $request)
+    {
 
         $data = $request->validate([
             "longitude" => 'required|numeric',
             "latitude" => 'required|numeric',
         ]);
 
-        $questionCollection = $request->session()->get(self::GAME_COLLECTION_KEY);
+        $questionCollection = Cache::get(self::GAME_COLLECTION_KEY . "@" . $request->user()->id);
         $questions = $questionCollection["questions"];
         $question = $questions[$questionCollection["currentIndex"]];
 
@@ -97,18 +100,18 @@ class GameController extends Controller
         $game->save();
 
         $elements = $this->getQuestionsIds();
-        $request->session()->put(self::GAME_COLLECTION_KEY, [
+        Cache::put(self::GAME_COLLECTION_KEY . "@" . $request->user()->id,[
             'game' => $game,
             'questions' => Question::find($elements)->shuffle(),
             'currentIndex' => 0
         ]);
-        $request->session()->save();
     }
 
-    private  function distance($lat1, $lon1, $lat2, $lon2, $unit) {
+    private function distance($lat1, $lon1, $lat2, $lon2, $unit)
+    {
 
         $theta = $lon1 - $lon2;
-        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
         $dist = acos($dist);
         $dist = rad2deg($dist);
         $miles = $dist * 60 * 1.1515;
@@ -171,12 +174,11 @@ class GameController extends Controller
     {
         $isEndGame = false;
         if ($questionCollection['currentIndex'] >= count($questions)) {
-            $request->session()->forget(self::GAME_COLLECTION_KEY);
+            Cache::forget(self::GAME_COLLECTION_KEY . "@" . $request->user()->id);
             $isEndGame = true;
         } else {
-            $request->session()->put(self::GAME_COLLECTION_KEY, $questionCollection);
+            Cache::put(self::GAME_COLLECTION_KEY . "@" . $request->user()->id, $questionCollection);
         }
-        $request->session()->save();
         return $isEndGame;
     }
 
