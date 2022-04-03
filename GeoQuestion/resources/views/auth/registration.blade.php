@@ -4,7 +4,7 @@
         <div class="cotainer">
             <div class="row justify-content-center">
                 <div class="col-md-4">
-                    <div class="card" style="top:40%">
+                    <div class="card" style="top:40%; background: #ffd053; border-radius: 25px;">
                         <h3 class="card-header text-center">Register User</h3>
                         <div class="card-body">
                             <form action="{{ route('register.custom') }}" method="POST">
@@ -36,10 +36,10 @@
                                     </div>
                                 </div>
                                 <div class="d-grid mx-auto">
-                                    <button type="submit" class="btn btn-dark btn-block">Sign up</button>
+                                    <button type="submit" class="btn btn-dark btn-block" style="background: #000000; border-radius: 25px;">Sign up</button>
                                 </div>
                                 <div class="d-grid" style="margin-top: 3px">
-                                    <a class="btn btn-dark btn-block" href="{{ route('login') }}">Have an account? Log in.</a>
+                                    <a class="btn btn-dark btn-block" style="background: #ff7e02; border-radius: 25px;" href="{{ route('login') }}">Have an account? Log in.</a>
                                 </div>
                             </form>
                         </div>

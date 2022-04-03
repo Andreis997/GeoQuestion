@@ -38,3 +38,7 @@ body {
     font-style: normal;
     font-display: swap;
 }
+
+.form-control {
+    border-radius: 125px !important;
+}

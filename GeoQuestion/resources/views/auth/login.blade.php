@@ -2,7 +2,7 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-4">
-            <div class="card" style="top: 50%">
+            <div class="card" style="top: 50%; background: #ffd053; border-radius: 25px;">
                 <h3 class="card-header text-center">Login</h3>
                 <div class="card-body">
                     <form method="POST" action="{{ route('login.custom') }}">
@@ -29,10 +29,10 @@
                             </div>
                         </div>
                         <div class="d-grid" style="margin-bottom: 3px">
-                            <a class="btn btn-dark btn-block" href="{{ route('register-user') }}">Register</a>
+                            <a class="btn btn-dark btn-block" style="background: #ff7e02; border-radius: 25px;" href="{{ route('register-user') }}">Register</a>
                         </div>
                         <div class="d-grid ">
-                            <button type="submit" class="btn btn-dark btn-block">Login</button>
+                            <button type="submit" class="btn btn-dark btn-block" style="background: #000000; border-radius: 25px;">Login</button>
                         </div>
                     </form>
                 </div>
