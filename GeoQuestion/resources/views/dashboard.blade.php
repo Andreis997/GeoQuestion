@@ -26,10 +26,7 @@
         var score = 0;
         var isFirstQuestionInit = false;
         // Initialize and add the map
-        var marker = new google.maps.Marker({
-            icon: markerImage,
-            map: map,
-        });
+        var marker = false;
         function initMap() {
             // The location of Uluru
             const uluru = {lat: 40.866667, lng: 34.566667};
@@ -48,6 +45,9 @@
             // The marker, positioned at Uluru
 
             google.maps.event.addListener(map, 'click', function (event) {
+                if (!isFirstQuestionInit) {
+                    return;
+                }
                 //Get the location that the user clicked.
                 var clickedLocation = event.latLng;
                 console.log(clickedLocation)
@@ -85,7 +85,7 @@
         }
 
         function nextQuestion() {
-            marker = new google.maps.Marker();
+            marker = false;
             loader("We are looking for new challenges!");
             $.ajax({
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -150,6 +150,7 @@
         }
 
         $(document).ready(function () {
+            //initMap();
             initQuestions();
             updateScore(score);
             loadLeaderBoard();

@@ -17,7 +17,7 @@ SELECT game_id, SUM(score) sum_score
 FROM `game_questions`
 GROUP BY game_id
 ORDER BY sum_score
- DESC LIMIT 7");
+ DESC LIMIT 6");
         $gamesIds = [];
         foreach ($gamesWithScore as $item) {
             $gamesIds[] = $item->game_id;

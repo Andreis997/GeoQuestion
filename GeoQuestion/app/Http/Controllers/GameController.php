@@ -133,7 +133,7 @@ class GameController extends Controller
 
         if ($distance <= 1) {
             $score = 1000;
-        } else if ($distance < 10) {
+        } else if ($distance < 100) {
             $score = 1000 - 1000 * $distance / 100;
         }
 
