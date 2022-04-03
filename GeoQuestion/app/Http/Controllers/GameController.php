@@ -128,11 +128,14 @@ class GameController extends Controller
      */
     private function getScore($distance): int
     {
-        if ($distance < 100) {
-            $score = 100;
-        } else {
-            $score = 10;
+        $score = 1;
+
+        if ($distance <= 1) {
+            $score = 1000;
+        } else if ($distance < 10) {
+            $score = 1000 - 1000 * $distance / 100;
         }
+
         return $score;
     }
 
