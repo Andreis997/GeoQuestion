@@ -6,10 +6,10 @@
         <btn id="sendAnswer" style="position:absolute !important; margin-top:617px; margin-left:1264px; color: white; font-size:160%;">Trimite<br>solutie</btn>
         <div style="position:absolute !important; color: white; font-size:280%; margin-top:516px; margin-left:90px;">Scor:</div>
 
-
+        <div id="leaderboardtext" style="color:white; position:absolute !important; font-size:200%; margin-top:0px;margin-left:0px; z-index: 1;margin-top:117px; margin-left:47px">Leaderboard</div>
         <div id="leaderback" style="background-image: url('img/leaderback.svg'); background-repeat: no-repeat; position:absolute; !important; margin-left:11px; margin-top:110px; width: 18%; height: 100%"></div>
         <div id="leaderboard" style="position: absolute; !important; color:white; font-size:90%; height: 335px; width: 281px;margin-top: 187px; margin-left:12px;"></div>
-
+        <div id="logo" style="background-image: url('img/logo.svg');background-repeat: no-repeat; height: 79px; position: absolute; width: 304px;"></div>
         <div id="scor" style="position:absolute !important; color: white; font-size:280%; margin-top:589px; margin-left:90px;"></div>
     </div>
     <div id="quiz" style="position:absolute !important; color: white; font-size: 200%; margin-top:-156px; margin-left: 445px;"></div>
