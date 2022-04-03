@@ -13,7 +13,7 @@ class LeaderboardResource extends JsonResource
             $score += $item->score;
         });
         return [
-            "email" => $this->resource->user->email,
+            "email" => $this->resource->user->name,
             "score" => $score,
         ];
     }
