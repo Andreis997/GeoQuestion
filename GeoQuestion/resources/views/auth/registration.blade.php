@@ -1,5 +1,7 @@
 @extends('app')
 @section('content')
+    <div id="logo"
+         style="background-image: url('img/logo.svg');background-repeat: no-repeat; height: 79px; position: absolute; width: 304px; margin-top: 60px; margin-left: 622px;"></div>
     <main class="signup-form">
         <div class="cotainer">
             <div class="row justify-content-center">

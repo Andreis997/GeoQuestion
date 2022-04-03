@@ -1,5 +1,7 @@
 @extends('app')
 @section('content')
+    <div id="logo"
+         style="background-image: url('img/logo.svg');background-repeat: no-repeat; height: 79px; position: absolute; width: 304px; margin-top: 60px; margin-left: 622px;"></div>
     <div class="row justify-content-center">
         <div class="col-md-4">
             <div class="card" style="top: 50%; background: #ffd053; border-radius: 25px;">
