@@ -41,6 +41,8 @@
         var score = 0;
         var isFirstQuestionInit = false;
         var markerImageGood;
+        var markerImageBad;
+        var markerImageClose;
         // Initialize and add the map
         var marker = false;
         var map;
@@ -54,6 +56,14 @@
             }
             markerImageGood = {
                 url: "img/checkpointGood.svg",
+                scaledSize: new google.maps.Size(50, 50)
+            }
+            markerImageBad = {
+                url: "img/checkpoint.svg",
+                scaledSize: new google.maps.Size(50, 50)
+            }
+            markerImageClose = {
+                url: "img/checkpointClose.svg",
                 scaledSize: new google.maps.Size(50, 50)
             }
             // The map, centered at Uluru
@@ -78,7 +88,7 @@
                     //Create the marker.
                     marker = new google.maps.Marker({
                         position: clickedLocation,
-                        icon: markerImage,
+                        icon: markerImageBad,
                         map: map,
                         draggable: true //make it draggable
                     });
@@ -103,6 +113,28 @@
                 latitudeAns = currentLocation.lat();
                 longitudeAns = currentLocation.lng();
                 console.log("lat:" + currentLocation.lat() + " lng:" + currentLocation.lng());
+                $.ajax({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        "longitude": latitudeAns,
+                        "latitude": longitudeAns,
+                    }),
+                    url: "{{ route('postIsInProximity') }}",
+                    processData: false,
+                    success: function (request, e, p) {
+                        if (request.is_in_proximity === true) {
+                            marker.setIcon(markerImageClose);
+                        } else {
+                            marker.setIcon(markerImageBad);
+                        }
+                    },
+                    error: function (request) {
+                        console.log(request);
+                    }
+                });
             }
         }
 

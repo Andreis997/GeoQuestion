@@ -73,6 +73,27 @@ class GameController extends Controller
         ]);
     }
 
+    public function postIsInProximity(Request $request)
+    {
+
+        $data = $request->validate([
+            "longitude" => 'required|numeric',
+            "latitude" => 'required|numeric',
+        ]);
+
+        $questionCollection = Cache::get(self::GAME_COLLECTION_KEY . "@" . $request->user()->id);
+        $questions = $questionCollection["questions"];
+        $question = $questions[$questionCollection["currentIndex"]];
+
+        $lon1 = $data['longitude'];
+        $lat1 = $data['latitude'];
+        $distance = abs($this->distance((float)$lat1, (float)$lon1, (float)$question->latitude_answer, (float)$question->longitude_answer, "K"));
+
+        return response()->json([
+            'is_in_proximity' => $distance <= 2000,
+        ]);
+    }
+
 
     /**
      */

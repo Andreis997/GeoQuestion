@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('nextQuestion', [\App\Http\Controllers\GameController::class, 'getNextQuestion'])->name('nextQuestion');
     Route::post('sendAnswer', [\App\Http\Controllers\GameController::class, 'postSendAnswer'])->name('postSendAnswer');
     Route::get('getLeaderBoard', [\App\Http\Controllers\LeaderboardController::class, 'getLeaderBoard'])->name('getLeaderBoard');
+    Route::post('postIsInProximity', [\App\Http\Controllers\GameController::class, 'postIsInProximity'])->name('postIsInProximity');
     Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
 });
 Route::group(['middleware' => 'guest'], function () {
